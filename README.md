@@ -1,7 +1,7 @@
 # cmpe239-StockMarketPredictNAnalysis
 Project for cmpe 239 course
 
-\nAlgorithms used in this project.
+Algorithms used in this project.
     1. Spark MLLib decision with regression. 
     2. Weaka Raandom forest.
     3. Stanford NLP.
