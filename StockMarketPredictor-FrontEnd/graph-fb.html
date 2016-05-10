@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head  >
+    <meta charset="UTF-8">
+    <title>Awesome Stock Market Predictor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
+
+    <link href="cssnew/stockpredictor.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="morris.css">
+    <script src="public/hello.js"></script>
+    <script src="public/stockdata.js"></script>
+
+
+    <!-- CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+
+    <link href="css/stock.css" rel="stylesheet">
+    <link href="css/calendar.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="morris.js"></script>
+    <script src="morris.min.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://cdn.oesmith.co.uk/morris-0.4.1.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script></body>
+
+</head>
+
+
+<body class="body" id="skin-blur-violate" style="padding-bottom: 20%" >
+<script src="js/charts.js"></script>
+<!--NAVBAR START-->
+
+<nav class="navbar navbar-default navbar-inverse" style="margin-bottom:0px;">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Stock Market Predictor</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+
+
+        <!--<ul class="nav navbar-nav navbar-right">-->
+        <!--<li class="dropdown">-->
+        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stock Market Predictor Quick Link <span class="caret"></span></a>-->
+        <!--<ul class="dropdown-menu">-->
+        <!--<li><a href="#">Apple</a></li>-->
+        <!--<li role="separator" class="divider"></li>-->
+        <!--<li><a href="#">Cisco</a></li>-->
+        <!--<li role="separator" class="divider"></li>-->
+        <!--<li><a href="#">FaceBook</a></li>-->
+        <!--<li role="separator" class="divider"></li>-->
+        <!--<li><a href="#">Google</a></li>-->
+        <!--<li role="separator" class="divider"></li>-->
+        <!--<li><a href="#">IBM</a></li>-->
+        <!--<li role="separator" class="divider"></li>-->
+        <!--<li><a href="#">Intuit</a></li>-->
+        <!--<li role="separator" class="divider"></li>-->
+        <!--<li><a href="#">MicroSoft</a></li>-->
+        <!--<li role="separator" class="divider"></li>-->
+        <!--<li><a href="#">Varian Medical</a></li>-->
+        <!--</ul>-->
+        <!--</li>-->
+        <!--</ul>-->
+
+        <!--</div>-->
+        <!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!--NAVBAR END-->
+
+
+
+
+<!--Header text      -->
+
+<div class="row logo">
+    <h2 style="margin-left: 3%; margin-top: 1.7%;">Facebook DashBoard</h2>
+</div>
+
+<!--Header text end-->
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Line Chart</h3>
+        <div class="box-tools pull-right">
+
+        </div>
+    </div>
+    <div class="box-body chart-responsive">
+        <div class="panel-body col-md-12"><div class="chart" id="line-chart" style="height: 300px;"></div></div>
+        <div class="panel-body col-md-6"><div class="donut" id="donut-chart" style="height: 300px;"></div></div>
+        <div class="panel-body col-md-6"><div class="bar" id="bar-chart" style="height: 300px;"></div></div>
+
+    </div><!-- /.box-body -->
+
+</div><!-- /.box -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="morris.js"></script>
+<script src="morris.min.js"></script>
+
+
+<script>
+    var linechartData = [],donutchartData=[];
+
+    $.ajax({
+
+        url: "http://localhost:8080/v1/api/stockhistory?company=FB",
+        type: 'GET',
+        dataType: 'JSON',
+        asynch:false,
+        success: function (linechartData1, textStatus) {
+
+            linechartData = linechartData1;
+            displayLine();
+        }
+
+    });
+    $.ajax({
+
+        url: "http://localhost:8080/v1/api/twittersentiment",
+        type: 'GET',
+        dataType: 'JSON',
+        asynch:false,
+        success: function (donutchartData1, textStatus) {
+            //displayDonut(donutchartData1)
+        }
+
+    });
+    function displayLine(){
+
+        var line = new Morris.Line({
+            element: 'line-chart',
+            resize: true,
+            data: linechartData,
+            xkey: 'y',
+            ykeys: ['item1'],
+            labels: ['Item 1'],
+            lineColors: ['#3c8dbc'],
+            hideHover: 'auto'
+        });
+    }
+
+    /*function displayDonut(donutchartData1){
+
+     //        var donet = new Morris.Donut({
+     //            element: 'donut-char',
+     //            resize: true,
+     //            data: [{'label':'Total Sentiment','value':donutchartData1[0].totalSentiment},
+     //                {'label':'Hotness','value':donutchartData1[0].hotnessPercent}
+     //            ],
+     //            lineColors: ['#3c8dbc'],
+     //            hideHover: 'auto'
+     //        });
+     Morris.Donut({
+     element: 'donut-char',
+     data: [
+     {label: "Download Sales", value: 12},
+     {label: "In-Store Sales", value: 30},
+     {label: "Mail-Order Sales", value: 20}
+     ]
+     });
+     }*/
+
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $.ajax({
+            url: "http://localhost:8080/v1/api/twittersentiment",
+            asynch:false,
+        }).then(function (data) {
+            var doData=data[2]
+            $('#donut-chart').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: false,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: 'Current hotness from twitter'
+                },
+
+                plotOptions: {
+                    pie: {
+                        innerSize: 100,
+                        depth: 45
+                    }
+                },
+                series: [{
+                    name: 'Sentiment',
+                    data:[{
+                        name: 'Total Sentiment',
+                        y: doData.totalSentiment*1.0
+                    }, {
+                        name: 'Hotness Percent',
+                        y:doData.hotnessPercent*1.0,
+                        sliced: true,
+                        selected: true
+                    }]
+                }]
+            });
+        });
+
+
+    });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $.ajax({
+            url: "http://localhost:8080/v1/api/stockanalysis",
+            asynch:false,
+        }).then(function (data) {
+            var barData=data[2]
+            var fq=parseInt(barData.firstQuarterUp.toString().substring(0,2))
+            var sq=parseInt(barData.secondQuarterUp.toString().substring(0,2))
+            var tq=parseInt(barData.thirdQuarterUp.toString().substring(0,2))
+
+            var frq=parseInt(barData.fourthQuarterUp.toString().substring(0,2))
+            console.log(fq)
+            $('#bar-chart').highcharts({
+                chart: {
+                    type: 'column',
+
+                },
+                title: {
+                    text: 'Quarterly analysis of the stocks'
+                },
+                subtitle: {
+                    text: '<p> Number of days up: '+ barData.noOfDownDays+'</p>'
+                },
+                xAxis: {
+                    categories: [
+                        'Q1',
+                        'Q2',
+                        'Q3',
+                        'Q4'
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    max:100,
+                    title: {
+                        text: 'Percentage'
+                    }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Stock movement',
+                    data:[ fq ,sq,tq,frq]
+                }]
+            });
+        });
+
+
+    });
+</script>
+
+</body>
+</html>

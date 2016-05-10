@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Awesome Stock Market Predictor</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+
+    <link href="cssnew/stockpredictor.css" rel="stylesheet">
+
+    <script src="public/hello.js"></script>
+    <script src="public/stockdata.js"></script>
+
+
+    <!-- CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <link href="css/stock.css" rel="stylesheet">
+    <link href="css/calendar.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+
+
+
+<body id="skin-blur-violate" ng-app="stockApp" ng-controller="stockController">
+
+
+<!--NAVBAR START-->
+
+<nav class="navbar navbar-default navbar-inverse" style="margin-bottom:0px;">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Stock Market Predictor</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stock Market Predictor Quick Link <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Apple</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Cisco</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">FaceBook</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Google</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">IBM</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Intuit</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">MicroSoft</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Varian Medical</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!--NAVBAR END-->
+
+
+<!--header start-->
+<header id="header" class="logo">
+    <div>
+        <h2 style="margin-left: 2%; color:#c7ddef;"><strong></strong></h2>
+    </div>
+</header>
+<!--End of Header-->
+
+
+
+<section id="main" class="p-relative" role="main">
+
+    <!-- Content BLOCK-->
+    <section id="content" class="container">
+
+
+
+        <!--Santanu NEW-->
+
+        <!-- Quick Stats BLOCKS -->
+        <div class="block-area" style="padding-bottom: 10px;  margin-top: 2%; "  ng-init="biggestGainerCompany()">
+            <div class="row" style="margin-left: 0px; margin-right: 0px;">
+
+                <div class="col-md-4 col-md-6">
+                    <div class="tile quick-stats">
+                        <div id="stats-line-2" class="pull-left"></div>
+                        <div class="data">
+                            <h5 class="col-md-6"  > <strong>Gainer of the day  </strong></h5>
+                            <h4 class="col-md-6" style="color: #00FF10"> <b>{{biggestGainerCompany.compNameBGS}}</b></h4>
+                            <h5 class="col-md-6"  style="color: #00FF00"> <strong>Biggest Gainer Amount   </strong>{{biggestGainerCompany.percentGainBGS}}</h5>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4 col-md-6">
+                    <div class="tile quick-stats">
+                        <div id="stats-line-3" class="pull-left"></div>
+                        <div class="data">
+                            <h5 class="col-md-6"  > <strong>Loser of the day  </strong></h5>
+                            <h4 class="col-md-6" style="color: #ff3a13"> {{biggestLoserCompany.compNameBGS}}</h4>
+                            <h5 class="col-md-6"  style="color: #FF0000"> <strong>Biggest Lost Amount   </strong>{{biggestLoserCompany.percentLoserStockBL}}</h5>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4 col-md-6">
+                    <div class="tile quick-stats">
+                        <div id="stats-line-4" class="pull-left"></div>
+                        <div class="data">
+                            <h5 class="col-md-6"  > <strong>Average Model Accuracy</strong></h5>
+                            <h4 class="col-md-6" style="color: #0000FF"> <strong>{{avgModelAccuracy}}</strong></h4>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!--END OF BLOCKS-->
+
+        <!--SANTANU END-->
+
+        <!-- Main STOCK DETAILS DISPLAY BLOCK -->
+
+        <div class="block-area">
+            <div class="row">
+                <div class="" ng-init="loadDetails()">
+                    <div class="row">
+                        <div class="col-md-6" style="background: rgba(0,0,0,0.25)">
+
+                            <ul ng-repeat="stock1 in stocks1" >
+                                    <div  class="panel panel-default col-md-11"
+                                         style="background: rgba(0,0,0,0.5); margin-top: 2%; margin-botton: 1%; margin-left: 4%; margin-right: 4%;
+                                        height: 110px;">
+                                        <div class="panel-body col-md-6">
+                                            <a ng-click="showDynamoGraph(stock1.compName)"><h3  >{{stock1.compName}}</h3></a>
+                                            <!--<a href="/StockMarketPredictor-FrontEnd/graph-appl.html"><h3  >{{stock1.compName}}</h3></a>-->
+                                            <h4 class="predict" ng-if="stock1.prediction=='DOWN'" style="color: #00FF00">{{stock1.prediction}}</h4>
+                                            <h4 class="predict" ng-if="stock1.prediction=='UP'" style="color: #FF0000">{{stock1.prediction}}</h4>
+                                        </div>
+                                        <div class="panel-body col-md-6" style="margin-top: 1% ">
+                                            <h5 class="predictamount">By {{stock1.predictAmount.toString().substring(0,1)}}</h5>
+                                            <h5>Model Accuracy {{stock1.accuracy*100}}%</h5>
+                                        </div>
+                                    </div>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+    <div class="#line-chart"><div id='linechart-tooltip' class='chart-tooltip'></div></div>
+        </div>
+
+
+
+
+        <script>
+        </script>
+        <!--MAIN DETAILS END-->
+
+
+        <!--CHART STARTS-->
+        <!--<div class="row">-->
+            <!--&lt;!&ndash; Main Chart BLOCK &ndash;&gt;-->
+            <!--&lt;!&ndash;LINE CHART START&ndash;&gt;-->
+            <!--<div class="row col-md-10"-->
+                 <!--style=" background: rgba(0,0,0,0.25); margin-top: 4%; margin-left: 8%; margin-right: 5%;-->
+                         <!--margin-bottom: 4%">-->
+                <!--<span>Charts</span>-->
+
+                <!--<div class="tile">-->
+                    <!--<h2 class="tile-title">Cisco Line Chart</h2>-->
+
+                    <!--<div class="p-10">-->
+                        <!--<div id="line-chart" class="main-chart" style="height: 300px"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+
+            <!--&lt;!&ndash;CHARTS BLOCK END&ndash;&gt;-->
+
+
+            <!--<div class="clearfix"></div>-->
+        <!--</div>-->
+
+
+
+        <!-- NewsFeeds BLOCK-->
+        <!--<div class="col-md-4">-->
+            <!--<h2 class="tile-title">-->
+                <!--News Feeds-->
+            <!--</h2>-->
+
+            <!--<div class="s-widget-body">-->
+                <!--<div id="">-->
+
+                    <!--<ul ng-repeat="feed in newsFeed">-->
+                        <!--<li><a href="#">{{feed}}</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--NewsFeeds BLOCK END-->
+
+        <!-- Calendar BLOCK-->
+        <!--<div class="col-md-4">-->
+            <!--<div id="sidebar-calendar"></div>-->
+        <!--</div>-->
+        <!--Calendar BLOCK END-->
+        </div>
+
+
+    </section>
+    <div id="chart_div"></div>
+    <!-- Older IE Message -->
+    <!--[if lt IE 9]>
+    <div class="ie-block">
+        <h1 class="Ops">Ooops!</h1>
+        <p>You are using an outdated version of Internet Explorer, upgrade to any of the following web browser in order
+            to access the maximum functionality of this website. </p>
+        <ul class="browsers">
+            <li>
+                <a href="https://www.google.com/intl/en/chrome/browser/">
+                    <img src="img/browsers/chrome.png" alt="">
+                    <div>Google Chrome</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.mozilla.org/en-US/firefox/new/">
+                    <img src="img/browsers/firefox.png" alt="">
+                    <div>Mozilla Firefox</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://www.opera.com/computer/windows">
+                    <img src="img/browsers/opera.png" alt="">
+                    <div>Opera</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://safari.en.softonic.com/">
+                    <img src="img/browsers/safari.png" alt="">
+                    <div>Safari</div>
+                </a>
+            </li>
+            <li>
+                <a href="http://windows.microsoft.com/en-us/internet-explorer/downloads/ie-10/worldwide-languages">
+                    <img src="img/browsers/ie.png" alt="">
+                    <div>Internet Explorer(New)</div>
+                </a>
+            </li>
+        </ul>
+        <p>Upgrade your browser for a Safer and Faster web experience. <br/>Thank you for your patience...</p>
+    </div>
+    <![endif]-->
+</section>
+
+<!-- Javascript Libraries -->
+<!-- jQuery -->
+<script src="js/jquery.min.js"></script> <!-- jQuery Library -->
+<script src="js/jquery-ui.min.js"></script> <!-- jQuery UI -->
+<script src="js/jquery.easing.1.3.js"></script> <!-- jQuery Easing - Requirred for Lightbox + Pie Charts-->
+
+<!-- Bootstrap -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Charts -->
+<script src="js/charts/jquery.flot.js"></script> <!-- Flot Main -->
+<script src="js/charts/jquery.flot.time.js"></script> <!-- Flot sub -->
+<script src="js/charts/jquery.flot.animator.min.js"></script> <!-- Flot sub -->
+<script src="js/charts/jquery.flot.resize.min.js"></script> <!-- Flot sub - for repaint when resizing the screen -->
+
+<script src="js/sparkline.min.js"></script> <!-- Sparkline - Tiny charts -->
+<script src="js/easypiechart.js"></script> <!-- EasyPieChart - Animated Pie Charts -->
+<script src="js/charts.js"></script> <!-- All the above chart related functions -->
+
+<!-- Map -->
+<script src="js/maps/jvectormap.min.js"></script> <!-- jVectorMap main library -->
+<script src="js/maps/usa.js"></script> <!-- USA Map for jVectorMap -->
+
+<!--  Form Related -->
+<script src="js/icheck.js"></script> <!-- Custom Checkbox + Radio -->
+
+<!-- UX -->
+<script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+
+<!-- Other -->
+<script src="js/calendar.min.js"></script> <!-- Calendar -->
+<script src="js/feeds.min.js"></script> <!-- News Feeds -->
+
+
+<!-- All JS functions -->
+<script src="js/functions.js"></script>
+</body>
+</html>

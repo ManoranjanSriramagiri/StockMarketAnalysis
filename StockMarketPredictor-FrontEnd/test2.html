@@ -1,0 +1,86 @@
+<html>
+<head>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: "http://localhost:8080/v1/api/stockhistory?company=FB"
+        }).then(function (data) {
+            //var d=JSON.parse(data);
+            console.log(data);
+            var yAxis=[],v3change=[]
+            for(var i=0;i<data.length;i++)
+            {
+                console.log(data[i].y)
+                var yy=data[i].item1
+                var xx= data[i].y;
+                yAxis.push(yy);
+                v3change.push(xx)
+            }
+            console.log(yAxis)
+            var json_obj = data;//parse JSO
+           // console.log(" json_obj -> " + json_obj);
+
+
+
+            $('#container3').highcharts({
+                chart: {
+                    type: 'area'
+                },
+                title: {
+                    text: 'Low Vs change in Stock value of the company'
+                },
+                xAxis: {
+                    type: 'datetime',
+                    categories: v3change,
+                    tickmarkPlacement: 'on',
+                    reversed: true,
+                    title: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Stock Price'
+                    },
+                    labels: {
+                    }
+                },
+                tooltip: {
+                    shared: true,
+                    valueSuffix: ' in USD'
+                },
+                plotOptions: {
+                    area: {
+                        stacking: 'normal',
+                        lineColor: '#666666',
+                        lineWidth: 1,
+                        marker: {
+                            lineWidth: 1,
+                            lineColor: '#666666'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Low',
+                    data: yAxis
+                }
+                ]
+            });
+
+
+        });
+    });
+</script>
+
+
+<!--<div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
+        <!--<div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
+        <div id="container3" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+</body>
+</html>
