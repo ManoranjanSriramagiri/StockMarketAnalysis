@@ -11,3 +11,6 @@ Technologies used.
     3. AngularJS 
     4. Apache spark 
     
+![alt tag](https://github.com/ManoranjanSriramagiri/StockMarketAnalysis/blob/master/Architecture.jpg)
+
+    
